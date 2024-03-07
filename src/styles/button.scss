@@ -1,0 +1,95 @@
+@mixin application-button {
+  border-radius: 5px;
+  color: var(--white-color);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  border: 0;
+  padding: 12px;
+  height: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: stretch;
+  user-select: none;
+  width: 100%;
+
+  &:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+  }
+
+  &:active {
+    background-color: var(--primary-color);
+  }
+}
+
+.application-animated-button {
+  display: inline-block;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 132%;
+  border-radius: 10rem;
+  letter-spacing: -0.03em;
+  background: transparent;
+  border: 0px solid;
+  height: 48px;
+  padding: 0.35rem 1.25rem !important;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  color: var(--text-color);
+  letter-spacing: 0.5px;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: all 0.3s;
+    border-radius: 10rem;
+    z-index: -1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 48px;
+    height: 48px;
+    background-color: var(--primary-color);
+    border-radius: 10rem;
+    z-index: -2;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+}
+
+.application-solid-button {
+  @include application-button;
+  background-color: var(--primary-color);
+}
+
+.application-border-button {
+  @include application-button;
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.application-text-button {
+  @include application-button;
+  background-color: transparent;
+  color: var(--primary-color);
+}
