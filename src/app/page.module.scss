@@ -1,3 +1,5 @@
+@import '@/styles/mediaQuery.scss';
+
 #loginMain {
   display: flex;
   flex-direction: column;
@@ -53,4 +55,20 @@
     }
   }
 
+}
+
+@include medium-screen {
+  #loginMain {
+    .loginFormContainer {
+      width: 50%;
+    }
+  }
+}
+
+@include small-screen {
+  #loginMain {
+    .loginFormContainer {
+      width: 80%;
+    }
+  }
 }
