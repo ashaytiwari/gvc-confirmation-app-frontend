@@ -6,3 +6,7 @@ export interface ISecureInputFieldProps {
   onChange: (value: any) => void,
   onBlur?: (value: any) => void
 }
+
+export interface ISpinnerProps {
+  fullScreen?: boolean
+}
