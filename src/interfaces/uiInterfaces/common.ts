@@ -10,3 +10,7 @@ export interface ISecureInputFieldProps {
 export interface ISpinnerProps {
   fullScreen?: boolean
 }
+
+export interface IComponentChildrenProps {
+  children: React.ReactNode
+}

@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 
 import { Toaster } from "react-hot-toast";
 
+import ReactQueryClientProvider from "@/components/ReactQueryClientProvider";
+
 import "./globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,11 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        {children}
-        <Toaster position="top-right" />
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          {children}
+          <Toaster position="top-right" />
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }

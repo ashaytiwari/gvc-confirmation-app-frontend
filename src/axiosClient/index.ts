@@ -60,3 +60,5 @@ const errorHandler = (error: AxiosError) => {
   throw new Error(`Something went wrong. Internal server error: ${_error}`);
 
 };
+
+export default axiosClient;
