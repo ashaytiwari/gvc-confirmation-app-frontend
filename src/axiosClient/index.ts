@@ -3,18 +3,8 @@ import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'ax
 import { clearApplicationStorage, getApplicationStorage } from '@/utilities/storage';
 
 const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL
 });
-
-axiosClient.interceptors.request.use(
-  (request) => requestHandler(request),
-  (error) => errorHandler(error)
-);
-
-axiosClient.interceptors.response.use(
-  (response) => responseHandler(response),
-  (error) => errorHandler(error)
-);
 
 const requestHandler = (request: InternalAxiosRequestConfig) => {
 
@@ -50,7 +40,7 @@ const errorHandler = (error: AxiosError) => {
 
   if (_error.data.statusCode === 401) {
     clearApplicationStorage();
-    return window.open(process.env.REACT_APP_DOMAIN_URL, '_self');
+    return window.open(process.env.NEXT_PUBLIC_DOMAIN_URL, '_self');
   }
 
   if (_error.data.statusCode !== 500) {
@@ -60,5 +50,15 @@ const errorHandler = (error: AxiosError) => {
   throw new Error(`Something went wrong. Internal server error: ${_error}`);
 
 };
+
+axiosClient.interceptors.request.use(
+  (request) => requestHandler(request),
+  (error) => errorHandler(error)
+);
+
+axiosClient.interceptors.response.use(
+  (response) => responseHandler(response),
+  (error) => errorHandler(error)
+);
 
 export default axiosClient;

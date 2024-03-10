@@ -19,10 +19,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const bodyAttributes = {
+    className: inter.className,
+    suppressHydrationWarning: true
+  };
+
   return (
     <ReactQueryClientProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body {...bodyAttributes}>
           {children}
           <Toaster position="top-right" />
         </body>
