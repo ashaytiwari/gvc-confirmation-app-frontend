@@ -1,12 +1,14 @@
 import { IAdminDashboardLinkControl } from "@/interfaces/uiInterfaces/common";
 
+import routesPath from "../routesPath";
+
 const adminDashboardHeaderLinks: Array<IAdminDashboardLinkControl> = [
   {
-    href: '/adminDashboard',
+    href: routesPath.adminDashboardRoute,
     label: 'Dashboard'
   },
   {
-    href: '/adminDashboard/changePassword',
+    href: routesPath.changePasswordRoute,
     label: 'Change Password'
   },
 ];

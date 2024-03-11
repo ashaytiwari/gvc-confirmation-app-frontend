@@ -9,6 +9,11 @@ class AuthenticationService {
     return response;
   }
 
+  async adminLogout() {
+    const response = await axiosClient.post('/logout');
+    return response;
+  }
+
 }
 
 export const authenticationService = new AuthenticationService();

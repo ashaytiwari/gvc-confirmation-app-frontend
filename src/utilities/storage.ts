@@ -1,6 +1,6 @@
 import { decryptCipherValueIntoPlainValue, encryptValueIntoCipherValue } from "./index";
 
-const APPLICATION_STORAGE_KEY = 'AD';
+const APPLICATION_STORAGE_KEY = 'GVC_RSVP_AD';
 
 export function setApplicationStorage(data: any) {
 

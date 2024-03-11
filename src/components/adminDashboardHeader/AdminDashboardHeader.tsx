@@ -5,15 +5,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { useAdminLogout } from '@/hooks/queriesMutations/authentication';
+
 import adminDashboardHeaderLinks from '@/constants/staticJSONs/adminDashboardHeaderLinks';
 
 import { IAdminDashboardLinkControl } from '@/interfaces/uiInterfaces/common';
 
 import appLogo from '@/assets/images/app-logo.png';
 
+import Spinner from '../spinner/Spinner';
+
 import styles from './AdminDashboardHeader.module.scss';
 
 const AdminDashboardHeader = () => {
+
+  const { mutate: adminLogout, isPending } = useAdminLogout();
 
   const pathName = usePathname();
 
@@ -41,7 +47,9 @@ const AdminDashboardHeader = () => {
 
     const logoutControlAttributes = {
       className: 'application-solid-button',
-      onClick() { }
+      onClick() {
+        adminLogout();
+      }
     };
 
     return <button {...logoutControlAttributes}>Logout</button>;
@@ -67,6 +75,15 @@ const AdminDashboardHeader = () => {
 
   }
 
+  function renderSpinner() {
+
+    if (isPending === false) {
+      return;
+    }
+
+    return <Spinner fullScreen={true} />;
+  }
+
   function renderLinkControlsContainer() {
 
     return (
@@ -88,6 +105,7 @@ const AdminDashboardHeader = () => {
     <div className={styles.adminDashboardHeaderMain}>
       {renderLogo()}
       {renderLinkControlsContainer()}
+      {renderSpinner()}
     </div>
   );
 
