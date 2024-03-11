@@ -30,7 +30,7 @@ export default function RootLayout({
       <html lang="en">
         <body {...bodyAttributes}>
           {children}
-          <Toaster position="top-right" />
+          <Toaster position="top-center" />
         </body>
       </html>
     </ReactQueryClientProvider>

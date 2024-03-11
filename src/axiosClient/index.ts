@@ -1,55 +1,10 @@
-import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
-import { clearApplicationStorage, getApplicationStorage } from '@/utilities/storage';
+import { errorHandler, requestHandler, responseHandler } from './handler';
 
 const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL
 });
-
-const requestHandler = (request: InternalAxiosRequestConfig) => {
-
-  const applicationStorage = getApplicationStorage();
-  const token = applicationStorage?.tokenData.tokenId;
-
-  if (typeof request.headers === 'undefined') {
-    return request;
-  }
-
-  if (token) {
-    request.headers['Authorization'] = 'Bearer ' + token;
-  }
-
-  return request;
-
-}
-
-const responseHandler = (response: AxiosResponse) => {
-  return response;
-}
-
-
-const errorHandler = (error: AxiosError) => {
-
-  const _error: any = error.response;
-
-  if (!_error) {
-    return error;
-  }
-
-  console.log(_error);
-
-  if (_error.data.statusCode === 401) {
-    clearApplicationStorage();
-    return window.open(process.env.NEXT_PUBLIC_DOMAIN_URL, '_self');
-  }
-
-  if (_error.data.statusCode !== 500) {
-    return _error;
-  }
-
-  throw new Error(`Something went wrong. Internal server error: ${_error}`);
-
-};
 
 axiosClient.interceptors.request.use(
   (request) => requestHandler(request),
