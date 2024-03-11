@@ -1,0 +1,71 @@
+@import '@/styles/mediaQuery.scss';
+
+.adminDashboardHeaderMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: var(--white-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 10px 20px;
+
+  .logoSection {
+    display: grid;
+    grid-template-columns: 50px auto;
+    column-gap: 10px;
+    align-items: center;
+    width: 100%;
+
+    img {
+      border-radius: 5px;
+    }
+
+    .applicationName {
+      color: var(--text-color);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  .linkControlsContainer,
+  .linkControls {
+    display: flex;
+    align-items: center;
+    column-gap: 25px;
+  }
+
+  .headerLinkControl {
+    text-decoration: none;
+    text-wrap: nowrap;
+    color: var(--tertiary-color);
+    font-weight: 500;
+
+    &.active,
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+}
+
+@include medium-screen {
+
+  .adminDashboardHeaderMain {
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: flex-start;
+  }
+
+  .linkControlsContainer,
+  .linkControls {
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: flex-start !important;
+  }
+
+}

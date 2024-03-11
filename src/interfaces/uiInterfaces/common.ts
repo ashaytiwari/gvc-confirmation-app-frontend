@@ -14,3 +14,8 @@ export interface ISpinnerProps {
 export interface IComponentChildrenProps {
   children: React.ReactNode
 }
+
+export interface IAdminDashboardLinkControl {
+  href: string,
+  label: string
+}
