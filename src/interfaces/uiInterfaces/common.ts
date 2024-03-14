@@ -19,3 +19,8 @@ export interface IAdminDashboardLinkControl {
   href: string,
   label: string
 }
+
+export interface IConfirmationFormEditorProps {
+  open: boolean,
+  onClose: () => void
+}

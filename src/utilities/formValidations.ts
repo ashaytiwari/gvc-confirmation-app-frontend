@@ -7,3 +7,11 @@ export function validatePassword(password: string) {
   return true;
 
 }
+
+export function isPastDate(date: Date | string) {
+  const _date = new Date(date);
+
+  const today = new Date();
+
+  return _date < today;
+}
