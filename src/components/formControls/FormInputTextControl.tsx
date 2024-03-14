@@ -16,7 +16,7 @@ const FormInputTextControl: React.FC<IFormInputTextControl> = (props) => {
       return;
     }
 
-    return <label className='form-label'>{label}</label>;
+    return <label className='form-control-label'>{label}</label>;
   }
 
   function renderInputControl() {
@@ -61,7 +61,7 @@ const FormInputTextControl: React.FC<IFormInputTextControl> = (props) => {
   }
 
   return (
-    <div className='form-group'>
+    <div className='form-control-group'>
       {renderLabel()}
       {renderInputControl()}
       {renderErrorMessage()}

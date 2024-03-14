@@ -9,7 +9,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 10px 20px;
+  padding: 10px 70px;
 
   .logoSection {
     display: grid;
@@ -57,6 +57,7 @@
     flex-direction: column;
     row-gap: 20px;
     justify-content: flex-start;
+    padding: 10px 40px;
   }
 
   .linkControlsContainer,
@@ -66,6 +67,17 @@
     flex-direction: column;
     row-gap: 20px;
     align-items: flex-start !important;
+  }
+
+}
+
+@include small-screen {
+
+  .adminDashboardHeaderMain {
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: flex-start;
+    padding: 10px 20px;
   }
 
 }

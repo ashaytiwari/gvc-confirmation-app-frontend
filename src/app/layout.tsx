@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import ReactQueryClientProvider from "@/components/ReactQueryClientProvider";
 
 import "./globals.scss";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const inter = Inter({ subsets: ["latin"] });
 

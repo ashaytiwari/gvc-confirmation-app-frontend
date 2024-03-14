@@ -6,10 +6,10 @@ textarea {
   padding: 10px 16px;
   background-color: inherit;
   font-weight: normal;
-  font-size: 15px;
-  line-height: 19px;
+  font-size: 15px !important;
+  line-height: 19px !important;
   outline: none;
-  width: calc(100% - 32px);
+  width: 100%;
   color: var(--text-color);
 
   &:placeholder {
@@ -32,14 +32,13 @@ textarea {
 
 }
 
-.form-group {
+.form-control-group {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
   width: 100%;
 }
 
-.form-label {
+.form-control-label {
   font-size: 15px;
   margin-bottom: 6px;
 }

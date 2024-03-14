@@ -1,7 +1,7 @@
 const routesPath = {
   initialRoute: '/',
   adminDashboardRoute: '/adminDashboard',
-  changePasswordRoute: '/changePassword'
+  changePasswordRoute: '/adminDashboard/changePassword'
 };
 
 export default routesPath;
