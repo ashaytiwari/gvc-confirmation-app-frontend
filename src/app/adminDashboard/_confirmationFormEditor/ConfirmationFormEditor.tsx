@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import moment from 'moment';
 import { Offcanvas } from 'react-bootstrap';
 import { useFormik } from 'formik';
+
+import { useUpdateConfirmationForm } from '@/hooks/queriesMutations/admin';
 
 import { IConfirmationFormEditorProps } from '@/interfaces/uiInterfaces/common';
 import { IConfirmationFormModel } from '@/interfaces/models/admin';
@@ -21,22 +23,40 @@ const ConfirmationFormEditor: React.FC<IConfirmationFormEditorProps> = (props) =
 
   const { open, onClose } = props;
 
+  const { mutate: updateConfirmationForm, isPending, isSuccess } = useUpdateConfirmationForm();
+
   const formik = useFormik({
     initialValues: {
+      _id: 0,
       title: '',
       date: ''
     } as IConfirmationFormModel,
     validate: validateConfirmationForm,
-    onSubmit: () => { }
+    onSubmit: handleSubmitConfirmationForm
   });
   const formikValues = formik.values;
   const formikErrors = formik.errors;
 
+  useEffect(() => {
+
+    if (isSuccess === false) {
+      return;
+    }
+
+    formik.resetForm();
+    onClose();
+
+  }, [isSuccess]);
+
+  function handleSubmitConfirmationForm() {
+    updateConfirmationForm(formikValues);
+  }
+
   function renderEditorBody() {
 
-    // if (true) {
-    //   return <Spinner />;
-    // }
+    if (isPending === true) {
+      return <Spinner />;
+    }
 
     const minimumDate = moment().format('YYYY-MM-DD');
 

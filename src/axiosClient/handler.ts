@@ -1,6 +1,8 @@
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import toast from "react-hot-toast";
 
+import messages from "@/constants/messages";
+
 import { clearApplicationStorage, getApplicationStorage } from "@/utilities/storage";
 
 export const requestHandler = (request: InternalAxiosRequestConfig) => {
@@ -35,6 +37,7 @@ export const errorHandler = (error: AxiosError) => {
 
   if (_error.data.statusCode === 401) {
     clearApplicationStorage();
+    toast.error(messages.sessionExpired);
     return window.open(process.env.NEXT_PUBLIC_DOMAIN_URL, '_self');
   }
 
