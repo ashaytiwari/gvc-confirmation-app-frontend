@@ -53,17 +53,45 @@
       }
     }
   }
+
+  .searchBarContainer {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 5px;
+    padding-right: 14px;
+
+    .searchBarInput {
+      border: none;
+    }
+
+    .searchControl {
+      background-color: inherit;
+      border: none;
+      outline: none;
+      color: var(--primary-color);
+    }
+  }
 }
 
 @include mini-screen {
   #adminDashboardMain {
     padding: 30px 40px;
+
+    .searchBarContainer {
+      width: 50%;
+    }
   }
 }
 
 @include small-screen {
   #adminDashboardMain {
     padding: 30px 20px;
+
+    .searchBarContainer {
+      width: 100%;
+    }
 
     .paginationFooter {
       justify-content: center;

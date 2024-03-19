@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import { useGetConfirmationForms } from '@/hooks/queriesMutations/admin';
 
@@ -24,8 +24,8 @@ function AdminDashboard() {
     page: 1
   });
 
-  const { data: responseData, isPending, isFetching } = useGetConfirmationForms(rootState.page, rootState.title);
-  const confirmationFormsState: IConfirmationFormsStateModel = responseData?.data.data;
+  const { data: responseData, isPending, isFetching, refetch } = useGetConfirmationForms(rootState.page, rootState.title);
+  const confirmationFormsState: IConfirmationFormsStateModel = responseData?.data?.data;
 
   function handlePreviousControlClick() {
     setRootState((_rootState) => {
@@ -79,7 +79,7 @@ function AdminDashboard() {
 
     const nextControlAttributes = {
       className: styles.paginationControl,
-      disabled: rootState.page === confirmationFormsState.totalPages,
+      disabled: rootState.page === confirmationFormsState?.totalPages,
       onClick: handleNextControlClick
     };
 
@@ -87,9 +87,50 @@ function AdminDashboard() {
       <div className={styles.paginationFooter}>
         <button {...previousControlAttributes}><FontAwesomeIcon icon={faChevronLeft} /></button>
         <label className={styles.paginationLabel}>
-          Page <span className={styles.pageCount}>{rootState.page}</span> of <span className={styles.pageCount}>{confirmationFormsState.totalPages}</span>
+          Page <span className={styles.pageCount}>{rootState.page}</span> of <span className={styles.pageCount}>{confirmationFormsState?.totalPages}</span>
         </label>
         <button {...nextControlAttributes}><FontAwesomeIcon icon={faChevronRight} /></button>
+      </div>
+    );
+
+  }
+
+  function renderSearchBar() {
+
+    const searchInputControlAttributes = {
+      className: styles.searchBarInput,
+      type: 'text',
+      placeholder: 'Search by title',
+      value: rootState.title,
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRootState((_rootState) => {
+          return {
+            ..._rootState,
+            title: event.target.value
+          };
+        })
+      },
+      onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key !== 'Enter') {
+          return;
+        }
+        refetch();
+      }
+    };
+
+    const searchControlAttributes = {
+      className: styles.searchControl,
+      onClick() {
+        refetch();
+      }
+    };
+
+    return (
+      <div className={styles.searchBarContainer}>
+        <input {...searchInputControlAttributes} />
+        <button {...searchControlAttributes}>
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </button>
       </div>
     );
 
@@ -125,6 +166,7 @@ function AdminDashboard() {
       </div>
 
       {renderConfirmationFormEditor()}
+      {renderSearchBar()}
       {renderConfirmationForms()}
       {renderPaginationFooter()}
 
