@@ -1,6 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
+import queryKeys from "@/constants/queryKeys";
 import { IConfirmationFormModel } from "@/interfaces/models/admin";
 
 import { adminServices } from "@/services/admin";
@@ -18,8 +19,18 @@ export function useUpdateConfirmationForm() {
         toast.success(responseData.message);
       }
 
-      queryClient.invalidateQueries({ queryKey: ['confirmForm'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.confirmationForm] });
     }
+  });
+
+}
+
+export function useGetConfirmationForms(page: number, title?: string) {
+
+  return useQuery({
+    queryKey: [queryKeys.confirmationForm, page],
+    queryFn: () => adminServices.getConfirmationForms(page, title),
+    placeholderData: keepPreviousData
   });
 
 }

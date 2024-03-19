@@ -2,24 +2,40 @@
 
 import { useState } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
+import { IAdminDashboardRootStateModel } from '@/interfaces/uiInterfaces/admin';
+
 import ConfirmationFormEditor from './_confirmationFormEditor/ConfirmationFormEditor';
 
 import styles from './page.module.scss';
 
 function AdminDashboard() {
 
-  const [displayConfirmationForm, setDisplayConfirmationForm] = useState(false);
+  const [rootState, setRootState] = useState<IAdminDashboardRootStateModel>({
+    displayConfirmationForm: false,
+    title: '',
+    page: 0
+  });
+
+  function handlePreviousControlClick() { }
+
+  function handleNextControlClick() { }
 
   function renderConfirmationForm() {
 
-    if (displayConfirmationForm === false) {
+    if (rootState.displayConfirmationForm === false) {
       return;
     }
 
     const confirmationFormEditorAttributes = {
-      open: displayConfirmationForm,
+      open: rootState.displayConfirmationForm,
       onClose() {
-        setDisplayConfirmationForm(false);
+        setRootState({
+          ...rootState,
+          displayConfirmationForm: false
+        });
       }
     };
 
@@ -27,10 +43,37 @@ function AdminDashboard() {
 
   }
 
+  function renderPaginationFooter() {
+
+    const previousControlAttributes = {
+      className: styles.paginationControl,
+      onClick: handlePreviousControlClick
+    };
+
+    const nextControlAttributes = {
+      className: styles.paginationControl,
+      onClick: handleNextControlClick
+    };
+
+    return (
+      <div className={styles.paginationFooter}>
+        <button {...previousControlAttributes}><FontAwesomeIcon icon={faChevronLeft} /></button>
+        <label className={styles.paginationLabel}>
+          Page <span className={styles.pageCount}>{rootState.page}</span> of <span className={styles.pageCount}>10</span>
+        </label>
+        <button {...nextControlAttributes}><FontAwesomeIcon icon={faChevronRight} /></button>
+      </div>
+    );
+
+  }
+
   const createNewControlAttributes = {
     className: `application-solid-button ${styles.createNewControl}`,
     onClick() {
-      setDisplayConfirmationForm(true);
+      setRootState({
+        ...rootState,
+        displayConfirmationForm: true
+      });
     }
   };
 
@@ -43,6 +86,8 @@ function AdminDashboard() {
       </div>
 
       {renderConfirmationForm()}
+
+      {renderPaginationFooter()}
 
     </div>
   );
