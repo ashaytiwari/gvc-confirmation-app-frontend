@@ -1,5 +1,5 @@
 export interface IAdminDashboardRootStateModel {
-  displayConfirmationForm: boolean,
+  displayConfirmationFormEditor: boolean,
   title: string,
   page: number
 }

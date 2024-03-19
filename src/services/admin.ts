@@ -10,7 +10,14 @@ class AdminServices {
   }
 
   async getConfirmationForms(page: number, title?: string) {
-    const response = await axiosClient.get(`/getConfirmationForms?page=${page}&limit=6&title=${title}`);
+
+    let url = `/getConfirmationForms?page=${page}&limit=2`;
+
+    if (title) {
+      url += ` &title=${title}`;
+    }
+
+    const response = await axiosClient.get(url);
     return response;
   }
 

@@ -5,7 +5,12 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
+import { useGetConfirmationForms } from '@/hooks/queriesMutations/admin';
+
 import { IAdminDashboardRootStateModel } from '@/interfaces/uiInterfaces/admin';
+import { IConfirmationFormsStateModel } from '@/interfaces/models/admin';
+
+import Spinner from '@/components/spinner/Spinner';
 
 import ConfirmationFormEditor from './_confirmationFormEditor/ConfirmationFormEditor';
 
@@ -14,27 +19,44 @@ import styles from './page.module.scss';
 function AdminDashboard() {
 
   const [rootState, setRootState] = useState<IAdminDashboardRootStateModel>({
-    displayConfirmationForm: false,
+    displayConfirmationFormEditor: false,
     title: '',
-    page: 0
+    page: 1
   });
 
-  function handlePreviousControlClick() { }
+  const { data: responseData, isPending, isFetching } = useGetConfirmationForms(rootState.page, rootState.title);
+  const confirmationFormsState: IConfirmationFormsStateModel = responseData?.data.data;
 
-  function handleNextControlClick() { }
+  function handlePreviousControlClick() {
+    setRootState((_rootState) => {
+      return {
+        ..._rootState,
+        page: _rootState.page - 1
+      };
+    });
+  }
 
-  function renderConfirmationForm() {
+  function handleNextControlClick() {
+    setRootState((_rootState) => {
+      return {
+        ..._rootState,
+        page: _rootState.page + 1
+      };
+    });
+  }
 
-    if (rootState.displayConfirmationForm === false) {
+  function renderConfirmationFormEditor() {
+
+    if (rootState.displayConfirmationFormEditor === false) {
       return;
     }
 
     const confirmationFormEditorAttributes = {
-      open: rootState.displayConfirmationForm,
+      open: rootState.displayConfirmationFormEditor,
       onClose() {
         setRootState({
           ...rootState,
-          displayConfirmationForm: false
+          displayConfirmationFormEditor: false
         });
       }
     };
@@ -45,13 +67,19 @@ function AdminDashboard() {
 
   function renderPaginationFooter() {
 
+    if (isPending === true) {
+      return;
+    }
+
     const previousControlAttributes = {
       className: styles.paginationControl,
+      disabled: rootState.page === 1,
       onClick: handlePreviousControlClick
     };
 
     const nextControlAttributes = {
       className: styles.paginationControl,
+      disabled: rootState.page === confirmationFormsState.totalPages,
       onClick: handleNextControlClick
     };
 
@@ -59,7 +87,7 @@ function AdminDashboard() {
       <div className={styles.paginationFooter}>
         <button {...previousControlAttributes}><FontAwesomeIcon icon={faChevronLeft} /></button>
         <label className={styles.paginationLabel}>
-          Page <span className={styles.pageCount}>{rootState.page}</span> of <span className={styles.pageCount}>10</span>
+          Page <span className={styles.pageCount}>{rootState.page}</span> of <span className={styles.pageCount}>{confirmationFormsState.totalPages}</span>
         </label>
         <button {...nextControlAttributes}><FontAwesomeIcon icon={faChevronRight} /></button>
       </div>
@@ -67,12 +95,23 @@ function AdminDashboard() {
 
   }
 
+  function renderConfirmationForms() {
+
+    if (isPending || isFetching) {
+      return <Spinner />;
+    }
+
+    return (
+      <h3>Forms</h3>
+    );
+  }
+
   const createNewControlAttributes = {
     className: `application-solid-button ${styles.createNewControl}`,
     onClick() {
       setRootState({
         ...rootState,
-        displayConfirmationForm: true
+        displayConfirmationFormEditor: true
       });
     }
   };
@@ -85,8 +124,8 @@ function AdminDashboard() {
         <button {...createNewControlAttributes}>Create New</button>
       </div>
 
-      {renderConfirmationForm()}
-
+      {renderConfirmationFormEditor()}
+      {renderConfirmationForms()}
       {renderPaginationFooter()}
 
     </div>

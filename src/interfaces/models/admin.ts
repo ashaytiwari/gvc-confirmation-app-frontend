@@ -3,3 +3,9 @@ export interface IConfirmationFormModel {
   title: string,
   date: Date | string
 }
+
+export interface IConfirmationFormsStateModel {
+  confirmationForms: Array<IConfirmationFormModel>,
+  currentPage: number,
+  totalPages: number
+}
