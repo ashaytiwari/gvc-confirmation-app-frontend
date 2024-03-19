@@ -12,7 +12,7 @@ import { IConfirmationFormsStateModel } from '@/interfaces/models/admin';
 
 import Spinner from '@/components/spinner/Spinner';
 
-import ConfirmationFormEditor from './_confirmationFormEditor/ConfirmationFormEditor';
+import ConfirmationFormEditor from './_components/confirmationFormEditor/ConfirmationFormEditor';
 
 import styles from './page.module.scss';
 
