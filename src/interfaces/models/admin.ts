@@ -9,3 +9,8 @@ export interface IConfirmationFormsStateModel {
   currentPage: number,
   totalPages: number
 }
+
+export interface IChangePasswordModel {
+  oldPassword: string,
+  newPassword: string
+}

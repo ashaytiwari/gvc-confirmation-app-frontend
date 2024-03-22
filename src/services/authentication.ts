@@ -1,5 +1,6 @@
 import axiosClient from "@/axiosClient";
 
+import { IChangePasswordModel } from "@/interfaces/models/admin";
 import { ILoginParamsModel } from "@/interfaces/models/authentication";
 
 class AuthenticationService {
@@ -11,6 +12,11 @@ class AuthenticationService {
 
   async adminLogout() {
     const response = await axiosClient.post('/logout');
+    return response;
+  }
+
+  async changePassword(params: IChangePasswordModel) {
+    const response = await axiosClient.post('/changePassword', params);
     return response;
   }
 
