@@ -8,10 +8,12 @@ import { faChevronLeft, faChevronRight, faMagnifyingGlass } from '@fortawesome/f
 import { useGetConfirmationForms } from '@/hooks/queriesMutations/admin';
 
 import { IAdminDashboardRootStateModel } from '@/interfaces/uiInterfaces/admin';
-import { IConfirmationFormsStateModel } from '@/interfaces/models/admin';
+import { IConfirmationFormModel, IConfirmationFormsStateModel } from '@/interfaces/models/admin';
 
 import Spinner from '@/components/spinner/Spinner';
+import NoDataFoundSection from '@/components/noDataFoundSection/NoDataFoundSection';
 
+import ConfirmationFormCard from './_components/confirmationFormCard/ConfirmationFormCard';
 import ConfirmationFormEditor from './_components/confirmationFormEditor/ConfirmationFormEditor';
 
 import styles from './page.module.scss';
@@ -136,14 +138,36 @@ function AdminDashboard() {
 
   }
 
+  function renderConfirmationFormCard(confirmationForm: IConfirmationFormModel) {
+
+    const confirmationCardAttributes = {
+      data: confirmationForm,
+      key: confirmationForm._id
+    };
+
+    return <ConfirmationFormCard {...confirmationCardAttributes} key={confirmationForm._id} />;
+  }
+
   function renderConfirmationForms() {
 
     if (isPending || isFetching) {
       return <Spinner />;
     }
 
+    const _confirmationForms = confirmationFormsState.confirmationForms;
+
+    if (_confirmationForms.length === 0) {
+      return <NoDataFoundSection />;
+    }
+
     return (
-      <h3>Forms</h3>
+      <div className={styles.confirmationFormsContainer}>
+        {
+          _confirmationForms.map((confirmationForm) => (
+            renderConfirmationFormCard(confirmationForm)
+          ))
+        }
+      </div>
     );
   }
 

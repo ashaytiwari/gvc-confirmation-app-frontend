@@ -18,3 +18,16 @@ export const decryptCipherValueIntoPlainValue = (data: any) => {
   return decryptedData;
 
 };
+
+export function extractAvatarCharacters(value: string) {
+
+  const avatarArray = value.split(' ').splice(0, 2); // getting two words from the value only
+
+  let avatar = '';
+
+  for (let word of avatarArray) {
+    avatar += word[0].toUpperCase();
+  }
+
+  return avatar;
+}

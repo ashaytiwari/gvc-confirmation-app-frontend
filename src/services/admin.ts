@@ -11,7 +11,7 @@ class AdminServices {
 
   async getConfirmationForms(page: number, title?: string) {
 
-    let url = `/getConfirmationForms?page=${page}&limit=2`;
+    let url = `/getConfirmationForms?page=${page}&limit=6`;
 
     if (title) {
       url += ` &title=${title}`;

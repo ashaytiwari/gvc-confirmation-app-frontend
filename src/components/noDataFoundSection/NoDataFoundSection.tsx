@@ -1,7 +1,8 @@
+import Image from 'next/image';
+
 import noContentImage from '@/assets/images/no-content-image.svg';
 
 import styles from './NoDataFoundSection.module.scss';
-import Image from 'next/image';
 
 function NoDataFoundSection() {
 

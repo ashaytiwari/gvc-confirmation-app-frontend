@@ -73,6 +73,21 @@
       color: var(--primary-color);
     }
   }
+
+  .confirmationFormsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+  }
+}
+
+@include medium-screen {
+  #adminDashboardMain {
+    .confirmationFormsContainer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 }
 
 @include mini-screen {
@@ -81,6 +96,10 @@
 
     .searchBarContainer {
       width: 50%;
+    }
+
+    .confirmationFormsContainer {
+      grid-template-columns: repeat(1, 1fr);
     }
   }
 }
