@@ -21,9 +21,9 @@ import styles from './page.module.scss';
 function AdminDashboard() {
 
   const [rootState, setRootState] = useState<IAdminDashboardRootStateModel>({
-    displayConfirmationFormEditor: false,
     title: '',
-    page: 1
+    page: 1,
+    displayConfirmationFormEditor: false
   });
 
   const { data: responseData, isPending, isFetching, refetch } = useGetConfirmationForms(rootState.page, rootState.title);

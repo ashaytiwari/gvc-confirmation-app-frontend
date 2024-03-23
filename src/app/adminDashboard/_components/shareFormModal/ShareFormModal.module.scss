@@ -1,0 +1,37 @@
+.shareFormModalMain {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  .shareLinkTitle {
+    font-size: 16px;
+  }
+
+  .shareLinkContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+
+    .shareLink {
+      font-size: 14px;
+      color: var(--tertiary-color);
+      padding: 10px;
+      background-color: var(--secondary-color);
+      border-radius: 3px;
+    }
+
+  }
+
+  .socialMediaControls {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .socialMediaIcons {
+      font-size: 35px;
+      color: var(--tertiary-color);
+    }
+  }
+}

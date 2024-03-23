@@ -1,11 +1,17 @@
 import { IConfirmationFormModel } from "../models/admin"
 
 export interface IAdminDashboardRootStateModel {
-  displayConfirmationFormEditor: boolean,
   title: string,
-  page: number
+  page: number,
+  displayConfirmationFormEditor: boolean
 }
 
 export interface IConfirmationFormCardProps {
   data: IConfirmationFormModel
+}
+
+export interface IShareFormModalProps {
+  data: IConfirmationFormModel,
+  open: boolean,
+  onClose: () => void
 }

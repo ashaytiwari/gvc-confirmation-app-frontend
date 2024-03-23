@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,11 +8,15 @@ import { IConfirmationFormCardProps } from '@/interfaces/uiInterfaces/admin';
 
 import { extractAvatarCharacters } from '@/utilities';
 
+import ShareFormModal from '../shareFormModal/ShareFormModal';
+
 import styles from './ConfirmationFormCard.module.scss';
 
 const ConfirmationFormCard: React.FC<IConfirmationFormCardProps> = (props) => {
 
   const { data } = props;
+
+  const [displayShareFormModal, setDisplayShareFormModal] = useState(false);
 
   function renderCardControls() {
 
@@ -25,7 +29,9 @@ const ConfirmationFormCard: React.FC<IConfirmationFormCardProps> = (props) => {
     const shareControlAttributes = {
       title: 'Share Confirmation Form',
       className: `application-border-button ${styles.cardControl}`,
-      onClick() { }
+      onClick() {
+        setDisplayShareFormModal(true);
+      }
     };
 
     return (
@@ -38,6 +44,24 @@ const ConfirmationFormCard: React.FC<IConfirmationFormCardProps> = (props) => {
         </button>
       </div>
     );
+
+  }
+
+  function renderShareFormModal() {
+
+    if (displayShareFormModal === false) {
+      return;
+    }
+
+    const shareFormModalAttributes = {
+      data,
+      open: displayShareFormModal,
+      onClose() {
+        setDisplayShareFormModal(false);
+      }
+    };
+
+    return <ShareFormModal {...shareFormModalAttributes} />;
 
   }
 
@@ -57,6 +81,7 @@ const ConfirmationFormCard: React.FC<IConfirmationFormCardProps> = (props) => {
       </div>
 
       {renderCardControls()}
+      {renderShareFormModal()}
 
     </div>
   );
