@@ -2,6 +2,7 @@ export interface IFormInputTextControl {
   label?: string;
   type?: string;
   placeholder?: string;
+  className?: string,
   name: string;
   disabled?: boolean;
   value: any;

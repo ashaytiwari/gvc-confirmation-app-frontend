@@ -8,7 +8,7 @@ import SecureInputField from '../secureInputField/SecureInputField';
 
 const FormInputTextControl: React.FC<IFormInputTextControl> = (props) => {
 
-  const { label, name, type, disabled, secure, placeholder, value, error, onChange, onBlur } = props;
+  const { label, name, type, disabled, secure, placeholder, className, value, error, onChange, onBlur } = props;
 
   function renderLabel() {
 
@@ -35,11 +35,17 @@ const FormInputTextControl: React.FC<IFormInputTextControl> = (props) => {
       return <SecureInputField {...secureInputFieldProps} />;
     }
 
+    let inputClassName = typeof className === 'undefined' ? '' : className;
+
+    if (error) {
+      inputClassName += ` error`;
+    }
+
     const inputControlAttributes = {
       type,
       name,
       autoComplete: 'off',
-      className: error ? 'error' : '',
+      className: inputClassName,
       placeholder: placeholder ? placeholder : '',
       value,
       disabled: disabled ? disabled : false,

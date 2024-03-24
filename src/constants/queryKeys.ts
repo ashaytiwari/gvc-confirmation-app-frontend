@@ -1,5 +1,6 @@
 const queryKeys = {
-  confirmationForm: 'confirmationForm'
+  confirmationForm: 'confirmationForm',
+  confirmationFormDetailsForUser: 'confirmationFormDetailsForUser'
 };
 
 export default queryKeys;

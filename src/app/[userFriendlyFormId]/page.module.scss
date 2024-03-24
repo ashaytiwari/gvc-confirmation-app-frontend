@@ -1,0 +1,128 @@
+@mixin form-card {
+  background-color: var(--white-color);
+  border-radius: 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 20px;
+  width: 550px;
+  overflow: hidden;
+}
+
+#userConfirmationFormEditorMain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 25px;
+
+  .formContent {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+
+  .errorContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 40px;
+
+    img {
+      width: 40%;
+    }
+
+    .errorMessage {
+      font-size: clamp(1rem, -0.875rem + 8.333vw, 1.8rem);
+      color: var(--tertiary-color);
+      text-align: center;
+    }
+  }
+
+  .formDetailsHeader {
+    @include form-card;
+    padding: 0;
+
+    .colorRibbon {
+      border-top: 8px solid var(--primary-color);
+    }
+
+    .divider {
+      border-top: 1px solid var(--border-color);
+      margin: 5px 0;
+    }
+
+    .headerContent {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 10px;
+
+      h3 {
+        font-size: 30px;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      .eventDate {
+        color: var(--tertiary-color);
+        font-size: 15px;
+      }
+
+      .guideMessage {
+        color: var(--tertiary-color);
+        font-size: 13px;
+      }
+
+      .alreadySubmittedFormLabel {
+        letter-spacing: 0.2px;
+        font-size: 15px;
+
+        span {
+          color: var(--primary-color);
+          font-weight: 600;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+
+      .requiredLabel {
+        font-size: 15px;
+        color: var(--error-color);
+      }
+    }
+  }
+
+  .formCard {
+    @include form-card;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+
+    .formInput {
+      border: none;
+      border-bottom: 1px solid var(--tertiary-color);
+      border-radius: 0;
+      padding: 10px;
+    }
+
+    .formLabel {
+      font-size: 15px;
+
+      span {
+        color: var(--error-color);
+      }
+    }
+  }
+
+  .footerControls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    button {
+      width: 120px;
+    }
+  }
+
+}
