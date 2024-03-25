@@ -1,5 +1,7 @@
 import axiosClient from "@/axiosClient";
 
+import { IUpdateUserConfirmationsParamsModel } from "@/interfaces/models/user";
+
 class UserServices {
 
   async getConfirmationFormDetails(formId: string) {
@@ -10,6 +12,11 @@ class UserServices {
       throw response.data;
     }
 
+    return response;
+  }
+
+  async updateUserConfirmations(params: IUpdateUserConfirmationsParamsModel) {
+    const response = await axiosClient.post('/updateUserConfirmation', params);
     return response;
   }
 

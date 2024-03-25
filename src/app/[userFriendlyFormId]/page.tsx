@@ -1,21 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import moment from 'moment';
 import { useFormik } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
-import { useGetConfirmationFormDetails } from '@/hooks/queriesMutations/user';
+import { useGetConfirmationFormDetails, useUpdateUserConfirmation } from '@/hooks/queriesMutations/user';
 
 import { IConfirmationFormModel } from '@/interfaces/models/admin';
 import { IUserConfirmationModel } from '@/interfaces/models/user';
 
 import errorImage from '@/assets/images/error-image.svg';
+import formExpiredContentImage from '@/assets/images/form-expired-image.svg';
 
 import Spinner from '@/components/spinner/Spinner';
 import FormInputTextControl from '@/components/formControls/FormInputTextControl';
 
-import { getFormIdFromUserFriendlyFormId } from './utilities';
+import { isPastDate } from '@/utilities/formValidations';
+
+import { getFormIdFromUserFriendlyFormId, validateUserConfirmationForm } from './utilities';
 
 import styles from './page.module.scss';
 
@@ -24,8 +31,12 @@ function UserConfirmationFormEditor() {
   const { userFriendlyFormId } = useParams<{ userFriendlyFormId: string }>();
   const formId = getFormIdFromUserFriendlyFormId(userFriendlyFormId);
 
-  const { data: responseData, isPending, isError, error, isSuccess } = useGetConfirmationFormDetails(formId);
-  const formDetails: IConfirmationFormModel = responseData?.data?.data;
+  const getConfirmationFormDetailsState = useGetConfirmationFormDetails(formId);
+  const formDetails: IConfirmationFormModel = getConfirmationFormDetailsState.data?.data?.data;
+
+  const { mutate: updateUserConfirmation, isPending: updateUserConfirmationPending, isSuccess, data } = useUpdateUserConfirmation();
+
+  const [formSuccessfullySubmitted, setFormSuccessfullySubmitted] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -34,11 +45,29 @@ function UserConfirmationFormEditor() {
       personCount: '',
       remark: ''
     } as IUserConfirmationModel,
-    validate: () => { },
-    onSubmit: () => { }
+    validate: validateUserConfirmationForm,
+    onSubmit: handleUserConfirmationFormSubmit
   });
   const formikValues = formik.values;
   const formikErrors = formik.errors;
+
+  useEffect(() => {
+
+    if (isSuccess === true && data.data.statusCode === 200) {
+      setFormSuccessfullySubmitted(true);
+    }
+
+  }, [isSuccess, data]);
+
+  function handleUserConfirmationFormSubmit() {
+
+    const params = {
+      confirmationFormId: formId,
+      ...formikValues
+    };
+
+    updateUserConfirmation(params);
+  }
 
   function renderErrorContent() {
 
@@ -53,7 +82,37 @@ function UserConfirmationFormEditor() {
     return (
       <div className={styles.errorContent}>
         <Image {...errorImageAttributes} />
-        <h4 className={styles.errorMessage}>{error?.message}...</h4>
+        <h4 className={styles.errorMessage}>{getConfirmationFormDetailsState.error?.message}...</h4>
+      </div>
+    );
+
+  }
+
+  function renderSuccessContent() {
+
+    return (
+      <div className={styles.successContent}>
+        <FontAwesomeIcon icon={faCircleCheck} className={styles.checkIcon} />
+        <h4 className={styles.successMessage}>Form successfully submitted...</h4>
+      </div>
+    );
+
+  }
+
+  function renderFormExpiredContent() {
+
+    const formExpiredContentImageAttributes = {
+      src: formExpiredContentImage,
+      alt: 'form-expired',
+      style: {
+        height: 'auto'
+      }
+    };
+
+    return (
+      <div className={styles.formExpiredContent}>
+        <Image {...formExpiredContentImageAttributes} />
+        <h4 className={styles.formExpiredMessage}>Attention: The confirmation form is officially closed for submissions.</h4>
       </div>
     );
 
@@ -90,11 +149,18 @@ function UserConfirmationFormEditor() {
 
   function renderFullNameControl() {
 
+    let fullNameError: string | undefined = '';
+
+    if (formikErrors.fullName !== '' && formik.touched.fullName === true) {
+      fullNameError = formikErrors.fullName;
+    }
+
     const fullNameControlAttributes = {
       placeholder: 'Enter full name',
       type: 'text',
       name: 'fullName',
       className: styles.formInput,
+      error: fullNameError,
       value: formikValues.fullName,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur
@@ -111,11 +177,18 @@ function UserConfirmationFormEditor() {
 
   function renderNumberOfPeopleControl() {
 
+    let noOfPeopleError: string | undefined = '';
+
+    if (formikErrors.personCount !== '' && formik.touched.personCount === true) {
+      noOfPeopleError = formikErrors.personCount;
+    }
+
     const numberOfPeopleControlAttributes = {
       placeholder: 'Enter number of people',
       type: 'number',
       name: 'personCount',
       className: styles.formInput,
+      error: noOfPeopleError,
       value: formikValues.personCount,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur
@@ -155,7 +228,9 @@ function UserConfirmationFormEditor() {
 
     const submitControlAttributes = {
       className: 'application-solid-button',
-      onClick() { }
+      onClick() {
+        formik.handleSubmit();
+      }
     };
 
     const clearFormControlAttributes = {
@@ -167,7 +242,7 @@ function UserConfirmationFormEditor() {
 
     return (
       <div className={styles.footerControls}>
-        <button {...submitControlAttributes}>Submit</button>
+        <button {...submitControlAttributes} type='button'>Submit</button>
         <button {...clearFormControlAttributes}>Clear Form</button>
       </div>
     );
@@ -176,12 +251,20 @@ function UserConfirmationFormEditor() {
 
   function renderContent() {
 
-    if (isPending === true) {
+    if (getConfirmationFormDetailsState.isPending === true || updateUserConfirmationPending === true) {
       return <Spinner fullScreen={true} />;
     }
 
-    if (isError === true) {
+    if (getConfirmationFormDetailsState.isError === true) {
       return renderErrorContent();
+    }
+
+    if (formSuccessfullySubmitted === true) {
+      return renderSuccessContent();
+    }
+
+    if (isPastDate(formDetails.date) === true) {
+      return renderFormExpiredContent();
     }
 
     return (

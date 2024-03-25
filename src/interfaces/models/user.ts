@@ -5,3 +5,11 @@ export interface IUserConfirmationModel {
   remark: string,
   addedBy: string
 }
+
+export interface IUpdateUserConfirmationsParamsModel {
+  confirmationFormId: string,
+  _id: string | number,
+  fullName: string,
+  personCount: number | string,
+  remark?: string
+}

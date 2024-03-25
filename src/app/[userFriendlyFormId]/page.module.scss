@@ -38,6 +38,43 @@
     }
   }
 
+  .formExpiredContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 40px;
+
+    img {
+      width: 40%;
+    }
+
+    .formExpiredMessage {
+      font-size: clamp(1rem, -0.875rem + 8.333vw, 1.8rem);
+      color: var(--tertiary-color);
+      text-align: center;
+    }
+  }
+
+  .successContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 40px;
+
+    .checkIcon {
+      color: var(--primary-color);
+      font-size: 200px;
+    }
+
+    .successMessage {
+      font-size: clamp(1rem, -0.875rem + 8.333vw, 1.8rem);
+      color: var(--tertiary-color);
+      text-align: center;
+    }
+  }
+
   .formDetailsHeader {
     @include form-card;
     padding: 0;

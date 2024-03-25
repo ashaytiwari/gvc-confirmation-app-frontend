@@ -4,7 +4,10 @@ const messages = {
   confirmationFormCantBeCreatedForPastDates: 'Confirmation form can not be created for past dates',
 
   sessionExpired: 'Your session has been expired. You have been logged out. Please login again to continue.',
-  passwordChangeSuccessfully: 'Password changed successfully. Please login again to continue.'
+  passwordChangeSuccessfully: 'Password changed successfully. Please login again to continue.',
+
+  personCountShouldBeInteger: 'Number of people should be integer.',
+  personCountValid: 'Number of people should be equal or greater than zero.'
 };
 
 export default messages;
