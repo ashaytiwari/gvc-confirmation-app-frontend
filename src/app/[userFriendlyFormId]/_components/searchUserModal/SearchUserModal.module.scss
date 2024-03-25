@@ -1,0 +1,48 @@
+.searchUserModalMain {
+  max-height: 300px;
+  overflow-y: auto;
+
+  .searchInputContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 5px;
+    padding-right: 14px;
+
+    input {
+      border: none;
+    }
+
+    .searchControl {
+      background-color: inherit;
+      border: none;
+      outline: none;
+      color: var(--primary-color);
+    }
+  }
+
+  .searchMessage {
+    font-size: 15px;
+    color: var(--tertiary-color);
+    text-align: center;
+    width: 100%;
+  }
+
+  .searchResultsContainer {
+    margin: 20px 0 10px 0;
+  }
+
+  .searchResultLabel {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 17px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--secondary-color);
+    }
+  }
+
+}

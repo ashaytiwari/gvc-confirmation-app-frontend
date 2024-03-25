@@ -21,7 +21,7 @@ export function validateUserConfirmationForm(values: IUserConfirmationModel) {
     errors.personCount = messages.required;
   } else if (Number.isInteger(values.personCount) === false) {
     errors.personCount = messages.personCountShouldBeInteger;
-  } else if (+values.personCount <= 0) {
+  } else if (+values.personCount < 0) {
     errors.personCount = messages.personCountValid;
   }
 

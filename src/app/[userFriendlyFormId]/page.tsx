@@ -24,6 +24,8 @@ import { isPastDate } from '@/utilities/formValidations';
 
 import { getFormIdFromUserFriendlyFormId, validateUserConfirmationForm } from './utilities';
 
+import SearchUserModal from './_components/searchUserModal/SearchUserModal';
+
 import styles from './page.module.scss';
 
 function UserConfirmationFormEditor() {
@@ -37,6 +39,7 @@ function UserConfirmationFormEditor() {
   const { mutate: updateUserConfirmation, isPending: updateUserConfirmationPending, isSuccess, data } = useUpdateUserConfirmation();
 
   const [formSuccessfullySubmitted, setFormSuccessfullySubmitted] = useState(false);
+  const [displaySearchUserModal, setDisplaySearchUserModal] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -122,6 +125,12 @@ function UserConfirmationFormEditor() {
 
     const eventDate = moment(formDetails.date).format('Do MMM YYYY');
 
+    const editHereControlAttributes = {
+      onClick() {
+        setDisplaySearchUserModal(true);
+      }
+    };
+
     return (
       <div className={styles.formDetailsHeader}>
 
@@ -134,7 +143,9 @@ function UserConfirmationFormEditor() {
 
           <div className={styles.divider}></div>
 
-          <label className={styles.alreadySubmittedFormLabel}>Already submitted your form? <span>Edit Here</span></label>
+          <label className={styles.alreadySubmittedFormLabel}>
+            Already submitted your form? <span {...editHereControlAttributes}>Edit Here</span>
+          </label>
 
           <div className={styles.divider}></div>
 
@@ -278,9 +289,33 @@ function UserConfirmationFormEditor() {
     );
   }
 
+  function renderSearchUserModal() {
+
+    if (displaySearchUserModal === false) {
+      return;
+    }
+
+    const searchUserModalAttributes = {
+      formId,
+      open: displaySearchUserModal,
+      onClose() {
+        setDisplaySearchUserModal(false);
+      },
+      onSelect(confirmation: IUserConfirmationModel) {
+        formik.setFieldValue('_id', confirmation._id);
+        formik.setFieldValue('fullName', confirmation.fullName);
+        formik.setFieldValue('personCount', confirmation.personCount);
+        formik.setFieldValue('remark', confirmation.remark);
+      }
+    };
+
+    return <SearchUserModal {...searchUserModalAttributes} />;
+  }
+
   return (
     <div id={styles.userConfirmationFormEditorMain}>
       {renderContent()}
+      {renderSearchUserModal()}
     </div>
   );
 

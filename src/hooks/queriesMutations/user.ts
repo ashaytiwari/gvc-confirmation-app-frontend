@@ -16,6 +16,15 @@ export function useGetConfirmationFormDetails(formId: string) {
 
 }
 
+export function useGetUserConfirmations(formId: string) {
+
+  return useQuery({
+    queryKey: [queryKeys.userConfirmations],
+    queryFn: () => userServices.getUserConfirmationsByFormId(formId)
+  });
+
+}
+
 export function useUpdateUserConfirmation() {
 
   return useMutation({

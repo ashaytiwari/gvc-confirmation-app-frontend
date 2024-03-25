@@ -20,6 +20,17 @@ class UserServices {
     return response;
   }
 
+  async getUserConfirmationsByFormId(formId: string) {
+    const url = `/getUserConfirmations?formId=${formId}`;
+    const response = await axiosClient.get(url);
+
+    if (response.data.statusCode !== 200) {
+      throw response.data;
+    }
+
+    return response;
+  }
+
 };
 
 export const userServices = new UserServices();
