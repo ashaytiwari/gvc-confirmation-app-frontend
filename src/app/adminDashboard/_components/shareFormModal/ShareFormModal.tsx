@@ -9,18 +9,15 @@ import { Modal } from 'react-bootstrap';
 
 import { IShareFormModalProps } from '@/interfaces/uiInterfaces/admin';
 
+import { extractTitleString } from '@/utilities';
+
 import styles from './ShareFormModal.module.scss';
 
 const ShareFormModal: React.FC<IShareFormModalProps> = (props) => {
 
   const { data, open, onClose } = props;
 
-  const shareLink = `${process.env.NEXT_PUBLIC_DOMAIN_URL}${data._id}-${extractTitleString()}`;
-
-  function extractTitleString() {
-    const titleArray = data.title.split(' ');
-    return titleArray.join('-');
-  }
+  const shareLink = `${process.env.NEXT_PUBLIC_DOMAIN_URL}${data._id}-${extractTitleString(data.title)}`;
 
   async function copyFormLink() {
     await navigator.clipboard.writeText(shareLink);

@@ -21,8 +21,9 @@ import Spinner from '@/components/spinner/Spinner';
 import FormInputTextControl from '@/components/formControls/FormInputTextControl';
 
 import { isPastDate } from '@/utilities/formValidations';
+import { getFormIdFromUserFriendlyFormId } from '@/utilities';
 
-import { getFormIdFromUserFriendlyFormId, validateUserConfirmationForm } from './utilities';
+import { validateUserConfirmationForm } from './utilities';
 
 import SearchUserModal from './_components/searchUserModal/SearchUserModal';
 

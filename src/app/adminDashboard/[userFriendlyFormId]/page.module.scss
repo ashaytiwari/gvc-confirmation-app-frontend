@@ -1,0 +1,30 @@
+#userConfirmationsReportMain {
+  padding: 30px 70px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+
+  .header {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: auto 80px;
+
+    h3 {
+      font-size: 25px;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  .totalConfirmationLabel {
+    font-size: 20px;
+    color: var(--tertiary-color);
+    font-weight: 500;
+  }
+
+  .noConfirmationsLabel {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+  }
+}

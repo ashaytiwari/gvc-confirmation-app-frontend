@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +7,7 @@ import { faEye, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 
 import { IConfirmationFormCardProps } from '@/interfaces/uiInterfaces/admin';
 
-import { extractAvatarCharacters } from '@/utilities';
+import { extractAvatarCharacters, extractTitleString } from '@/utilities';
 
 import ShareFormModal from '../shareFormModal/ShareFormModal';
 
@@ -16,6 +17,8 @@ const ConfirmationFormCard: React.FC<IConfirmationFormCardProps> = (props) => {
 
   const { data } = props;
 
+  const router = useRouter();
+
   const [displayShareFormModal, setDisplayShareFormModal] = useState(false);
 
   function renderCardControls() {
@@ -23,7 +26,10 @@ const ConfirmationFormCard: React.FC<IConfirmationFormCardProps> = (props) => {
     const viewControlAttributes = {
       title: 'View Confirmations',
       className: `application-border-button ${styles.cardControl}`,
-      onClick() { }
+      onClick() {
+        const path = `/adminDashboard/${data._id}-${extractTitleString(data.title)}`;
+        router.push(path);
+      }
     };
 
     const shareControlAttributes = {

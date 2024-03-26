@@ -20,7 +20,7 @@ const SearchUserModal: React.FC<ISearchUserModalProps> = (props) => {
   const { formId, open, onClose, onSelect } = props;
 
   const getUserConfirmationsState = useGetUserConfirmations(formId);
-  const userConfirmations = getUserConfirmationsState.data?.data?.data;
+  const userConfirmations = getUserConfirmationsState.data?.data?.data.confirmations;
 
   const [searchQuery, setSearchQuery] = useState('');
 

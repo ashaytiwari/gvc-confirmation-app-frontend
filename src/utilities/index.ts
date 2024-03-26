@@ -31,3 +31,17 @@ export function extractAvatarCharacters(value: string) {
 
   return avatar;
 }
+
+export function getFormIdFromUserFriendlyFormId(userFriendlyFormId: string) {
+
+  const formIdArray = userFriendlyFormId.split('-');
+  return formIdArray[0];
+
+}
+
+export function extractTitleString(title: string) {
+
+  const titleArray = title.split(' ');
+  return titleArray.join('-');
+
+}

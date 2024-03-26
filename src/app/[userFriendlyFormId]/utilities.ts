@@ -2,13 +2,6 @@ import messages from "@/constants/messages";
 
 import { IUserConfirmationModel } from "@/interfaces/models/user";
 
-export function getFormIdFromUserFriendlyFormId(userFriendlyFormId: string) {
-
-  const formIdArray = userFriendlyFormId.split('-');
-  return formIdArray[0];
-
-}
-
 export function validateUserConfirmationForm(values: IUserConfirmationModel) {
 
   const errors = {} as IUserConfirmationModel;

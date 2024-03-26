@@ -22,7 +22,9 @@ const ReactQueryClientProvider: React.FC<IComponentChildrenProps> = (props) => {
     }));
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
   );
 
 };
