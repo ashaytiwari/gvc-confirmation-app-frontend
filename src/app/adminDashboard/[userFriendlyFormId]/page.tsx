@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import { Table } from 'react-bootstrap';
@@ -13,6 +13,8 @@ import Spinner from '@/components/spinner/Spinner';
 
 import { getFormIdFromUserFriendlyFormId } from '@/utilities';
 
+import ConfirmationFormEditor from '../_components/confirmationFormEditor/ConfirmationFormEditor';
+
 import styles from './page.module.scss';
 
 function UserConfirmationsReport() {
@@ -23,6 +25,8 @@ function UserConfirmationsReport() {
   const getUserConfirmationsState = useGetUserConfirmations(formId);
   const confirmationFormDetails = getUserConfirmationsState.data?.data?.data;
   const confirmations = confirmationFormDetails?.confirmations;
+
+  const [displayConfirmationFormEditor, setDisplayConfirmationFormEditor] = useState(false);
 
   useEffect(() => {
     getUserConfirmationsState.refetch();
@@ -94,7 +98,9 @@ function UserConfirmationsReport() {
 
     const editControlAttributes = {
       className: 'application-solid-button',
-      onClick() { }
+      onClick() {
+        setDisplayConfirmationFormEditor(true);
+      }
     };
 
     const totalConfirmationCount = calculateTotalConfirmationsCount();
@@ -114,9 +120,28 @@ function UserConfirmationsReport() {
     );
   }
 
+  function renderConfirmationFormEditor() {
+
+    if (displayConfirmationFormEditor === false) {
+      return;
+    }
+
+    const confirmationFormEditorAttributes = {
+      data: confirmationFormDetails,
+      open: displayConfirmationFormEditor,
+      onClose() {
+        setDisplayConfirmationFormEditor(false);
+        getUserConfirmationsState.refetch();
+      }
+    };
+
+    return <ConfirmationFormEditor {...confirmationFormEditorAttributes} />;
+  }
+
   return (
     <div id={styles.userConfirmationsReportMain}>
       {renderContent()}
+      {renderConfirmationFormEditor()}
     </div>
   );
 

@@ -21,7 +21,7 @@ import styles from './ConfirmationFormEditor.module.scss';
 
 const ConfirmationFormEditor: React.FC<IConfirmationFormEditorProps> = (props) => {
 
-  const { open, onClose } = props;
+  const { data, open, onClose } = props;
 
   const { mutate: updateConfirmationForm, isPending, isSuccess } = useUpdateConfirmationForm();
 
@@ -48,6 +48,16 @@ const ConfirmationFormEditor: React.FC<IConfirmationFormEditorProps> = (props) =
 
   }, [isSuccess]);
 
+  useEffect(() => {
+
+    if (typeof data !== 'undefined') {
+      formik.setFieldValue('_id', data._id);
+      formik.setFieldValue('title', data.title);
+      formik.setFieldValue('date', data.date);
+    }
+
+  }, [data]);
+
   function handleSubmitConfirmationForm() {
     updateConfirmationForm(formikValues);
   }
@@ -59,6 +69,7 @@ const ConfirmationFormEditor: React.FC<IConfirmationFormEditorProps> = (props) =
     }
 
     const minimumDate = moment().format('YYYY-MM-DD');
+    const date = formikValues.date ? moment(formikValues.date).format('YYYY-MM-DD') : '';
 
     let titleError: string | undefined = '';
     let dateError: string | undefined = '';
@@ -87,7 +98,7 @@ const ConfirmationFormEditor: React.FC<IConfirmationFormEditorProps> = (props) =
       name: 'date',
       error: dateError,
       minDate: minimumDate,
-      value: formikValues.date,
+      value: date,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur
     };

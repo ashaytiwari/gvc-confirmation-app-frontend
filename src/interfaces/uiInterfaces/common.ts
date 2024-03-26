@@ -1,3 +1,4 @@
+import { IConfirmationFormModel } from "../models/admin"
 import { IUserConfirmationModel } from "../models/user"
 
 export interface ISecureInputFieldProps {
@@ -23,6 +24,7 @@ export interface IAdminDashboardLinkControl {
 }
 
 export interface IConfirmationFormEditorProps {
+  data?: IConfirmationFormModel,
   open: boolean,
   onClose: () => void
 }
