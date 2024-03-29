@@ -56,9 +56,7 @@ const AdminDashboardHeader = () => {
 
   }
 
-  function renderDashboardLink(link: IAdminDashboardLinkControl) {
-
-    const id = useId();
+  function renderDashboardLink(link: IAdminDashboardLinkControl, index: number) {
 
     let linkClassName = styles.headerLinkControl;
 
@@ -71,7 +69,7 @@ const AdminDashboardHeader = () => {
       className: linkClassName
     };
 
-    return <Link {...linkAttributes} key={id}>{link.label}</Link>;
+    return <Link {...linkAttributes} key={index}>{link.label}</Link>;
 
   }
 
@@ -90,8 +88,8 @@ const AdminDashboardHeader = () => {
       <div className={styles.linkControlsContainer}>
         <div className={styles.linkControls}>
           {
-            adminDashboardHeaderLinks.map((link) => (
-              renderDashboardLink(link)
+            adminDashboardHeaderLinks.map((link, index) => (
+              renderDashboardLink(link, index)
             ))
           }
         </div>
